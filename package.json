@@ -1,7 +1,7 @@
 {
     "name": "@serenity-js/playground",
     "description": "",
-    "version": "0.0.0",
+    "version": "0.0.0-development",
     "bin": {
         "playground": "bin/playground"
     },
@@ -51,7 +51,8 @@
         "build:server": "tsc --project tsconfig.json",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "commit": "git-cz"
     },
     "dependencies": {
         "express": "^4.17.1",
@@ -83,6 +84,8 @@
         "@types/express": "^4.17.6",
         "chromedriver": "^83.0.0",
         "codelyzer": "^5.2.2",
+        "commitizen": "^4.1.2",
+        "cz-conventional-changelog": "^3.2.0",
         "cross-env": "^7.0.2",
         "is-ci": "^2.0.0",
         "jasmine": "^3.5.0",
@@ -98,8 +101,14 @@
         "todomvc-common": "^1.0.5",
         "tslib": "^2.0.0",
         "ts-node": "^8.10.1",
+        "travis-deploy-once": "^5.0.11",
         "tslint": "^6.1.2",
         "typescript": "~3.8.3",
         "zone.js": "^0.10.3"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
 }
