@@ -1,0 +1,20 @@
+# Node
+node_modules
+*.log
+
+# Build artifacts
+target
+
+# Specs
+e2e
+spec
+
+# Config
+.*
+angular.json
+browserslist
+*.conf.js
+*.conf.json
+tsconfig.json
+tsconfig*.json
+tslint.json

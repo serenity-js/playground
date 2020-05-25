@@ -1,32 +1,68 @@
-// @ts-check
-// Protractor configuration file, see link for more information
-// https://github.com/angular/protractor/blob/master/lib/config.ts
+const
+    { ArtifactArchiver, StreamReporter } = require('@serenity-js/core'),
+    { ConsoleReporter } = require('@serenity-js/console-reporter'),
+    { Photographer, TakePhotosOfFailures, TakePhotosOfInteractions } = require('@serenity-js/protractor'),
+    { SerenityBDDReporter } = require('@serenity-js/serenity-bdd'),
+    isCI = require('is-ci');
 
-const { SpecReporter } = require('jasmine-spec-reporter');
+const fs = require('fs');
 
 /**
  * @type { import("protractor").Config }
  */
 exports.config = {
-  allScriptsTimeout: 11000,
-  specs: [
-    './src/**/*.e2e-spec.ts'
-  ],
-  capabilities: {
-    browserName: 'chrome'
-  },
-  directConnect: true,
-  baseUrl: 'http://localhost:4200/',
-  framework: 'jasmine',
-  jasmineNodeOpts: {
-    showColors: true,
-    defaultTimeoutInterval: 30000,
-    print: function() {}
-  },
-  onPrepare() {
-    require('ts-node').register({
-      project: require('path').join(__dirname, './tsconfig.json')
-    });
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-  }
+    baseUrl: 'http://localhost:4200/',
+
+    chromeDriver: require(`chromedriver/lib/chromedriver`).path,
+
+    SELENIUM_PROMISE_MANAGER: false,
+
+    directConnect: true,
+
+    allScriptsTimeout: 11000,
+
+    framework:      'custom',
+    frameworkPath:  require.resolve('@serenity-js/protractor/adapter'),
+
+    specs: [
+        './src/**/*.spec.ts'
+    ],
+
+    serenity: {
+        runner: 'jasmine',
+        crew: [
+            ArtifactArchiver.storingArtifactsAt('./target/site/serenity'),
+            ConsoleReporter.forDarkTerminals(),
+            Photographer.whoWill(TakePhotosOfFailures),     // or Photographer.whoWill(TakePhotosOfInteractions),
+            new SerenityBDDReporter(),
+        ]
+    },
+
+    onPrepare() {
+        require('ts-node').register({
+            project: require('path').join(__dirname, './tsconfig.json')
+        });
+    },
+
+    capabilities: {
+        browserName: 'chrome',
+
+        // see https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities#loggingpreferences-json-object
+        loggingPrefs: {
+            browser: 'SEVERE' // "OFF", "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST", "ALL".
+        },
+
+        chromeOptions: {
+            args: [
+                '--no-sandbox',
+                '--disable-infobars',
+                '--disable-dev-shm-usage',
+                '--disable-extensions',
+                '--log-level=3',
+                '--disable-gpu',
+                '--window-size=1920,1080',
+                '--headless',
+            ].concat(isCI ? ['--headless'] : [])    // run in headless mode on the CI server
+        }
+    }
 };
