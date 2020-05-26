@@ -3,35 +3,40 @@ if: tag IS blank
 
 sudo: false
 language: node_js
-cache:
-    directories:
-        - ~/.npm
+os: linux
 
 notifications:
-    email: false
+  email: false
 
 branches:
-    except:
-        - /^v\d+\.\d+\.\d+$/
+  except:
+    - /^v\d+\.\d+\.\d+$/
 
-node_js:
-    - '10'
-    - '12'
+stages:
+  - name: test
+  - name: deploy
 
-addons:
+test: &test
+  addons:
     chrome: stable
+  script:
+    - npm run e2e
 
 jobs:
-    include:
-        - stage: test
-          script:
-              - npm run build
-              - npm run e2e
-        - stage: release
-          node_js: lts/*
-          script: skip
-          deploy:
-              provider: script
-              skip_cleanup: true
-              script:
-                  - npx semantic-release
+  include:
+    - <<: *test
+      stage: test
+      node_js: 10
+      name: 'Test (Linux Node v10)'
+    - <<: *test
+      stage: test
+      node_js: 12
+      name: 'Test (Linux Node v12)'
+    - stage: release
+      node_js: lts/*
+      script:
+        - npm run build
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: npx semantic-release
