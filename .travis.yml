@@ -6,16 +6,30 @@ language: node_js
 cache:
     directories:
         - ~/.npm
+
 notifications:
     email: false
-node_js:
-    - '10'
-    - '12'
-script:
-    - npm run build
-    - npm run e2e
+
 branches:
     except:
         - /^v\d+\.\d+\.\d+$/
 addons:
     chrome: stable
+
+jobs:
+    include:
+        - stage: verify
+          node_js:
+              - '10'
+              - '12'
+          script:
+              - npm run build
+              - npm run e2e
+        - stage: release
+          node_js: lts/*
+          script: skip
+          deploy:
+              provider: script
+              skip_cleanup: true
+              script:
+                  - npx semantic-release
