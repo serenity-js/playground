@@ -17,13 +17,13 @@ branches:
 node_js:
     - '10'
     - '12'
-            
+
 addons:
     chrome: stable
 
 jobs:
     include:
-        - stage: verify
+        - stage: test
           script:
               - npm run build
               - npm run e2e
