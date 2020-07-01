@@ -8,11 +8,13 @@ function errorHandler(err, req, res, next) {
 export const api = express()
     .use(errorHandler)
     .get('/api/health', (req: express.Request, res: express.Response) => {
-        res.sendStatus(200);
+        res.status(200).send({
+            uptime: Math.floor(process.uptime()),
+        });
     })
     .get('/api/config', (req: express.Request, res: express.Response) => {
         res.send({
-            // storage: 'BrowserLocalStorage',
+            // storage: 'LocalStorageService',
             storage: 'InMemoryStorageService',
         });
     })

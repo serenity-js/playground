@@ -1,5 +1,13 @@
-import { contain, containAtLeastOneItemThat, Ensure, equals, not, property } from '@serenity-js/assertions';
-import { actorCalled, actorInTheSpotlight, engage, Log } from '@serenity-js/core';
+import {
+    contain,
+    containAtLeastOneItemThat,
+    Ensure,
+    equals,
+    isGreaterThan,
+    not,
+    property,
+} from '@serenity-js/assertions';
+import { actorCalled, actorInTheSpotlight, engage, Log, Note, TakeNote } from '@serenity-js/core';
 import { LocalServer, StartLocalServer, StopLocalServer } from '@serenity-js/local-server';
 import { Browser } from '@serenity-js/protractor';
 import { logging } from 'protractor';
@@ -14,7 +22,7 @@ import {
     Start,
     ToggleItem,
 } from './screenplay';
-import { GetRequest, LastResponse, Send } from '@serenity-js/rest';
+import { ChangeApiUrl, GetRequest, LastResponse, Send } from '@serenity-js/rest';
 
 describe('Playground Todo App', () => {
 
@@ -26,6 +34,7 @@ describe('Playground Todo App', () => {
             Log.the(LocalServer.url()),
             Send.a(GetRequest.to(LocalServer.url())),
             Ensure.that(LastResponse.status(), equals(200)),
+            TakeNote.of(LocalServer.url()),
         ));
 
     afterAll(() =>
@@ -37,6 +46,7 @@ describe('Playground Todo App', () => {
 
         it('can record new items', () =>
             actorCalled('Jasmine').attemptsTo(
+                ChangeApiUrl.to(Note.of(LocalServer.url())),
                 Start.withAnEmptyList(),
                 RecordItem.called('Walk a dog'),
                 Ensure.that(RecordedItems(), contain('Walk a dog')),

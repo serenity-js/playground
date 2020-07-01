@@ -3,7 +3,7 @@ import { server } from '../../index';
 
 export = {
     command: 'start',
-    desc: 'Makes sure the Serenity BDD CLI jar file is available and up to date',
+    desc: 'Start the Serenity/JS playground',
     builder: {
         port: {
             default:   3000,
