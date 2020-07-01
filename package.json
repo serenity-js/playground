@@ -72,7 +72,7 @@
     "@angular/cli": "^9.1.7",
     "@angular/compiler-cli": "^9.1.9",
     "@serenity-js/assertions": "^2.5.2",
-    "@serenity-js/core": "^2.5.1",
+    "@serenity-js/core": "^2.11.1",
     "@serenity-js/console-reporter": "^2.5.2",
     "@serenity-js/local-server": "^2.5.2",
     "@serenity-js/jasmine": "^2.5.5",
