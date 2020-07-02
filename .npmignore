@@ -8,6 +8,7 @@ target
 # Specs
 e2e
 spec
+src/**/*.spec.ts
 
 # Config
 .*
