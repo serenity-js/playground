@@ -89,7 +89,7 @@
         "@types/chai": "^4.2.11",
         "@types/express": "^4.17.6",
         "@types/nanoid": "^2.1.0",
-        "@types/node": "^12.12.47",
+        "@types/node": "^14.0.14",
         "@types/mocha": "^7.0.2",
         "chai": "^4.2.0",
         "chromedriver": "^83.0.0",
