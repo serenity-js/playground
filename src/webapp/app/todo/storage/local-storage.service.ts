@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Todo } from '../../../../domain';
 import { StorageService } from './storage.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class LocalStorageService extends StorageService {
@@ -20,7 +21,7 @@ export class LocalStorageService extends StorageService {
         }
     }
 
-    create(todo: string): Todo {
+    create(todo: string): Observable<Todo> {
         todo = todo.trim();
         if (todo.length === 0) {
             return;
@@ -30,51 +31,54 @@ export class LocalStorageService extends StorageService {
         this.todos.push(newTodo);
         this.save();
 
-        return newTodo;
+        return of(newTodo);
     }
 
-    findAll(): Todo[] {
-        return this.todos;
+    findAll(): Observable<Todo[]> {
+        return of(this.todos);
     }
 
-    update(todo: Todo): void {
+    update(todo: Todo): Observable<Todo> {
         todo.title = todo.title.trim();
         if (todo.title.length === 0) {
             this.delete(todo);
         }
+
         this.save();
+
+        return of(todo);
     }
 
-    delete(todo: Todo): void {
+    delete(todo: Todo): Observable<Todo> {
         this.todos = this.todos.filter((t) => t !== todo);
+
         this.save();
+
+        return of(null);
     }
 
-    toggle(todo: Todo): void {
+    toggle(todo: Todo): Observable<Todo> {
         todo.completed = ! todo.completed;
+
         this.save();
+
+        return of(todo);
     }
 
-    toggleAll(completed: boolean): void {
+    toggleAll(completed: boolean): Observable<Todo[]> {
         this.todos.forEach((t) => t.completed = completed);
+
         this.save();
+
+        return of(this.todos);
     }
 
-    clearCompleted(): void {
+    clearCompleted(): Observable<Todo[]> {
         this.todos = this.todos.filter((t) => !t.completed);
+
         this.save();
-    }
 
-    remaining(): number {
-        return this.todos
-            .filter(t => !t.completed)
-            .length;
-    }
-
-    completed(): number {
-        return this.todos
-            .filter(t => t.completed)
-            .length;
+        return of(this.todos);
     }
 
     private loadTodos(): Todo[] {

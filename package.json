@@ -1,114 +1,125 @@
 {
-  "name": "@serenity-js/playground",
-  "description": "",
-  "version": "0.0.0-development",
-  "bin": {
-    "playground": "bin/playground"
-  },
-  "author": {
-    "name": "Jan Molak",
-    "email": "jan.molak@smartcodeltd.co.uk",
-    "url": "https://janmolak.com"
-  },
-  "funding": {
-    "url": "https://github.com/sponsors/serenity-js"
-  },
-  "homepage": "https://serenity-js.org",
-  "license": "Apache-2.0",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "keywords": [
-    "bdd",
-    "tdd",
-    "test",
-    "testing",
-    "serenity",
-    "screenplay",
-    "playground",
-    "learning"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/serenity-js/playground.git"
-  },
-  "bugs": {
-    "url": "https://github.com/serenity-js/playground/issues"
-  },
-  "engines": {
-    "node": ">= 10",
-    "npm": ">= 6"
-  },
-  "scripts": {
-    "ng": "ng",
-    "start": "npm run start:api & npm run start:webapp",
-    "start:webapp": "ng serve",
-    "start:api": "ts-node src/start.ts",
-    "build": "npm run build:webapp && npm run build:server",
-    "build:webapp": "ng build",
-    "build:server": "tsc --project tsconfig.json",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "commit": "git-cz",
-    "semantic-release": "semantic-release"
-  },
-  "dependencies": {
-    "express": "^4.17.1",
-    "yargs": "^15.3.1"
-  },
-  "devDependencies": {
-    "@angular/animations": "^10.0.2",
-    "@angular/common": "^10.0.2",
-    "@angular/compiler": "^10.0.2",
-    "@angular/core": "^10.0.2",
-    "@angular/forms": "^10.0.2",
-    "@angular/platform-browser": "^10.0.2",
-    "@angular/platform-browser-dynamic": "^10.0.2",
-    "@angular/router": "^10.0.2",
-    "@angular-devkit/build-angular": "^0.1000.1",
-    "@angular/cli": "^10.0.1",
-    "@angular/compiler-cli": "^10.0.2",
-    "@serenity-js/assertions": "^2.11.1",
-    "@serenity-js/core": "^2.11.1",
-    "@serenity-js/console-reporter": "^2.11.1",
-    "@serenity-js/local-server": "^2.11.1",
-    "@serenity-js/jasmine": "^2.11.1",
-    "@serenity-js/protractor": "^2.11.1",
-    "@serenity-js/serenity-bdd": "^2.11.1",
-    "@serenity-js/rest": "^2.11.1",
-    "@types/node": "^12.12.47",
-    "@types/jasmine": "^3.5.11",
-    "@types/express": "^4.17.6",
-    "chromedriver": "^83.0.0",
-    "codelyzer": "^5.2.2",
-    "commitizen": "^4.1.2",
-    "cz-conventional-changelog": "^3.2.0",
-    "cross-env": "^7.0.2",
-    "is-ci": "^2.0.0",
-    "jasmine": "^3.5.0",
-    "karma": "^5.1.0",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-coverage-istanbul-reporter": "^3.0.3",
-    "karma-jasmine": "^3.3.1",
-    "karma-jasmine-html-reporter": "^1.5.4",
-    "protractor": "^7.0.0",
-    "rxjs": "^6.5.5",
-    "tiny-types": "^1.14.1",
-    "todomvc-app-css": "^2.3.0",
-    "todomvc-common": "^1.0.5",
-    "tslib": "^2.0.0",
-    "ts-node": "^8.10.2",
-    "tslint": "^6.1.2",
-    "typescript": "^3.9.6",
-    "zone.js": "^0.10.3",
-    "semantic-release": "^17.1.1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
+    "name": "@serenity-js/playground",
+    "description": "",
+    "version": "0.0.0-development",
+    "bin": {
+        "playground": "bin/playground"
+    },
+    "author": {
+        "name": "Jan Molak",
+        "email": "jan.molak@smartcodeltd.co.uk",
+        "url": "https://janmolak.com"
+    },
+    "funding": {
+        "url": "https://github.com/sponsors/serenity-js"
+    },
+    "homepage": "https://serenity-js.org",
+    "license": "Apache-2.0",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "keywords": [
+        "bdd",
+        "tdd",
+        "test",
+        "testing",
+        "serenity",
+        "screenplay",
+        "playground",
+        "learning"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/serenity-js/playground.git"
+    },
+    "bugs": {
+        "url": "https://github.com/serenity-js/playground/issues"
+    },
+    "engines": {
+        "node": ">= 10",
+        "npm": ">= 6"
+    },
+    "scripts": {
+        "clean": "rimraf lib target",
+        "ng": "ng",
+        "start": "npm run start:api & npm run start:webapp",
+        "start:webapp": "ng serve",
+        "start:api": "ts-node src/start.ts",
+        "build": "npm run build:webapp && npm run build:server",
+        "build:webapp": "ng build",
+        "build:server": "tsc --project tsconfig.json",
+        "test": "ng test",
+        "lint": "ng lint",
+        "pree2e": "serenity-bdd update --ignoreSSL",
+        "e2e": "failsafe clean build e2e:execute e2e:report",
+        "e2e:execute": "ng e2e",
+        "e2e:report": "serenity-bdd run",
+        "commit": "git-cz",
+        "semantic-release": "semantic-release"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "lowdb": "^1.0.0",
+        "nanoid": "^3.1.10",
+        "yargs": "^15.3.1"
+    },
+    "devDependencies": {
+        "@angular-devkit/build-angular": "^0.1000.1",
+        "@angular/animations": "^10.0.2",
+        "@angular/cli": "^10.0.1",
+        "@angular/common": "^10.0.2",
+        "@angular/compiler": "^10.0.2",
+        "@angular/compiler-cli": "^10.0.2",
+        "@angular/core": "^10.0.2",
+        "@angular/forms": "^10.0.2",
+        "@angular/platform-browser": "^10.0.2",
+        "@angular/platform-browser-dynamic": "^10.0.2",
+        "@angular/router": "^10.0.2",
+        "@serenity-js/assertions": "^2.11.1",
+        "@serenity-js/console-reporter": "^2.11.1",
+        "@serenity-js/core": "^2.11.1",
+        "@serenity-js/local-server": "^2.11.1",
+        "@serenity-js/mocha": "^2.11.1",
+        "@serenity-js/protractor": "^2.11.1",
+        "@serenity-js/rest": "^2.11.1",
+        "@serenity-js/serenity-bdd": "^2.11.1",
+        "@types/chai": "^4.2.11",
+        "@types/express": "^4.17.6",
+        "@types/nanoid": "^2.1.0",
+        "@types/node": "^12.12.47",
+        "@types/mocha": "^7.0.2",
+        "chai": "^4.2.0",
+        "chromedriver": "^83.0.0",
+        "codelyzer": "^5.2.2",
+        "commitizen": "^4.1.2",
+        "cross-env": "^7.0.2",
+        "cz-conventional-changelog": "^3.2.0",
+        "npm-failsafe": "^0.4.1",
+        "is-ci": "^2.0.0",
+        "mocha": "^8.0.1",
+        "karma": "^5.1.0",
+        "karma-chrome-launcher": "^3.1.0",
+        "karma-coverage-istanbul-reporter": "^3.0.3",
+        "karma-mocha": "^2.0.1",
+        "protractor": "^7.0.0",
+        "rimraf": "^3.0.2",
+        "rxjs": "^6.5.5",
+        "semantic-release": "^17.1.1",
+        "tiny-types": "^1.14.1",
+        "todomvc-app-css": "^2.3.0",
+        "todomvc-common": "^1.0.5",
+        "ts-node": "^8.10.2",
+        "tslib": "^2.0.0",
+        "tslint": "^6.1.2",
+        "typescript": "^3.9.6",
+        "zone.js": "^0.10.3"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
-  }
 }

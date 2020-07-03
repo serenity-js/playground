@@ -7,7 +7,7 @@ import { TodoComponent } from './todo/todo.component';
 import { AppComponent } from './app.component';
 import { ConfigService } from './todo/config.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { InMemoryStorageService, LocalStorageService, StorageService } from './todo/storage';
+import { InMemoryStorageService, LocalStorageService, RestStorageService, StorageService } from './todo/storage';
 
 const routes: Routes = [
     { path: '', component: TodoComponent, pathMatch: 'full' },
@@ -18,14 +18,15 @@ const appInitializerFn = (config: ConfigService) =>
     () => config.load();
 
 export function storageServiceFactory(config: ConfigService, http: HttpClient) {
-    console.log({http});
-
     switch (config.get('storage')) {
         case 'LocalStorageService':
             return new LocalStorageService();
 
         case 'InMemoryStorageService':
             return new InMemoryStorageService();
+
+        case 'RestStorageService':
+            return new RestStorageService(http);
 
         default:
             throw new Error(`"${ config.get('storage') }" is not defined. Maybe a configuration error?`);

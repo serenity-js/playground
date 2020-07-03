@@ -1,13 +1,15 @@
 import { Ensure, equals } from '@serenity-js/assertions';
-import { Task } from '@serenity-js/core';
+import { Note, Task } from '@serenity-js/core';
 import { Navigate, Website } from '@serenity-js/protractor';
 import { RecordItem } from './RecordItem';
-import { GetRequest, LastResponse, Send } from '@serenity-js/rest';
+import { ChangeApiUrl, DeleteRequest, GetRequest, LastResponse, Send } from '@serenity-js/rest';
+import { LocalServer } from '@serenity-js/local-server';
 
 export class Start {
     static withAnEmptyList = () =>
         Task.where(`#actor starts with an empty list`,
             CheckIfTheServerIsUp(),
+            ClearTheDatabase(),
             Navigate.to('/'),
             Ensure.that(Website.title(), equals('Serenity/JS Playground')),
         );
@@ -23,4 +25,9 @@ const CheckIfTheServerIsUp = () =>
     Task.where(`#actor checks if the server is up`,
         Send.a(GetRequest.to('/api/health/')),
         Ensure.that(LastResponse.status(), equals(200)),
+    );
+
+const ClearTheDatabase = () =>
+    Task.where(`#actor clears the database`,
+        Send.a(DeleteRequest.to('/api/todos')),
     );

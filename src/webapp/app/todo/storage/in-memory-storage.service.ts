@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 import { Todo } from '../../../../domain';
 import { StorageService } from './storage.service';
@@ -13,7 +14,7 @@ export class InMemoryStorageService extends StorageService {
         super();
     }
 
-    create(todo: string): Todo {
+    create(todo: string): Observable<Todo> {
         todo = todo.trim();
         if (todo.length === 0) {
             return;
@@ -22,45 +23,43 @@ export class InMemoryStorageService extends StorageService {
         const newTodo = new Todo(++this.lastInsertId, todo);
         this.todos.push(newTodo);
 
-        return newTodo;
+        return of(newTodo);
     }
 
-    findAll(): Todo[] {
-        return this.todos;
+    findAll(): Observable<Todo[]> {
+        return of(this.todos);
     }
 
-    update(todo: Todo): void {
+    update(todo: Todo): Observable<Todo> {
         todo.title = todo.title.trim();
         if (todo.title.length === 0) {
             this.delete(todo);
         }
+
+        return of(todo);
     }
 
-    delete(todo: Todo): void {
+    delete(todo: Todo): Observable<Todo> {
         this.todos = this.todos.filter((t) => t !== todo);
+
+        return of(null);
     }
 
-    toggle(todo: Todo): void {
+    toggle(todo: Todo): Observable<Todo> {
         todo.completed = ! todo.completed;
+
+        return of(todo);
     }
 
-    toggleAll(completed: boolean): void {
+    toggleAll(completed: boolean): Observable<Todo[]> {
         this.todos.forEach((t) => t.completed = completed);
+
+        return of(this.todos);
     }
 
-    clearCompleted(): void {
+    clearCompleted(): Observable<Todo[]> {
         this.todos = this.todos.filter((t) => !t.completed);
-    }
 
-    remaining(): number {
-        return this.todos
-            .filter(t => !t.completed)
-            .length;
-    }
-
-    completed(): number {
-        return this.todos
-            .filter(t => t.completed)
-            .length;
+        return of(this.todos);
     }
 }

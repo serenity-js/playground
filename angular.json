@@ -26,7 +26,10 @@
                         "styles": [
                             "src/webapp/styles.css"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "allowedCommonJsDependencies": [
+                            "tiny-types"
+                        ]
                     },
                     "configurations": {
                         "production": {

@@ -29,11 +29,11 @@ exports.config = {
     ],
 
     serenity: {
-        runner: 'jasmine',
+        runner: 'mocha',
         crew: [
             ArtifactArchiver.storingArtifactsAt('./target/site/serenity'),
             ConsoleReporter.forDarkTerminals(),
-            Photographer.whoWill(TakePhotosOfInteractions),     // or Photographer.whoWill(TakePhotosOfInteractions),
+            Photographer.whoWill(TakePhotosOfFailures),     // or Photographer.whoWill(TakePhotosOfInteractions),
             new SerenityBDDReporter(),
         ]
     },

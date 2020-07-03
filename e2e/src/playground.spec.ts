@@ -3,14 +3,13 @@ import {
     containAtLeastOneItemThat,
     Ensure,
     equals,
-    isGreaterThan,
     not,
     property,
 } from '@serenity-js/assertions';
 import { actorCalled, actorInTheSpotlight, engage, Log, Note, TakeNote } from '@serenity-js/core';
 import { LocalServer, StartLocalServer, StopLocalServer } from '@serenity-js/local-server';
 import { Browser } from '@serenity-js/protractor';
-import { logging } from 'protractor';
+import { logging, protractor } from 'protractor';
 
 import {
     Actors,
@@ -22,31 +21,34 @@ import {
     Start,
     ToggleItem,
 } from './screenplay';
-import { ChangeApiUrl, GetRequest, LastResponse, Send } from '@serenity-js/rest';
+import { GetRequest, LastResponse, Send } from '@serenity-js/rest';
 
-describe('Playground Todo App', () => {
+describe('Playground Todo App', function() {
 
-    beforeAll(() => engage(new Actors()));
+    this.timeout(30000);
 
-    beforeAll(() =>
-        actorCalled('Adam').attemptsTo(
-            StartLocalServer.onOneOfThePreferredPorts([3000]),
-            Log.the(LocalServer.url()),
-            Send.a(GetRequest.to(LocalServer.url())),
-            Ensure.that(LastResponse.status(), equals(200)),
-            TakeNote.of(LocalServer.url()),
-        ));
-
-    afterAll(() =>
-        actorCalled('Adam').attemptsTo(
-            StopLocalServer.ifRunning(),
-        ));
+    before(() => engage(new Actors(protractor.browser.baseUrl)));
 
     describe('actor', () => {
 
+        before(() =>
+            actorCalled('Adam').attemptsTo(
+                StartLocalServer.onOneOfThePreferredPorts([3000]),
+                Log.the(LocalServer.url()),
+                Ensure.that(LocalServer.url(), equals('http://127.0.0.1:3000')),
+
+                Send.a(GetRequest.to('/api/health')),
+                Ensure.that(LastResponse.status(), equals(200)),
+                TakeNote.of(LocalServer.url()),
+            ));
+
+        after(() =>
+            actorCalled('Adam').attemptsTo(
+                StopLocalServer.ifRunning(),
+            ));
+
         it('can record new items', () =>
             actorCalled('Jasmine').attemptsTo(
-                ChangeApiUrl.to(Note.of(LocalServer.url())),
                 Start.withAnEmptyList(),
                 RecordItem.called('Walk a dog'),
                 Ensure.that(RecordedItems(), contain('Walk a dog')),
