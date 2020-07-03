@@ -26,12 +26,15 @@ export = {
     - User Interface - http://localhost:${ argv.port }
 
     API:
-    - Health check   -    GET http://localhost:${ argv.port }/api/health
-    - List items     -    GET http://localhost:${ argv.port }/api/todos
-    - Add an item    -   POST http://localhost:${ argv.port }/api/todos { title: string, completed: boolean }
-    - Update an item -    PUT http://localhost:${ argv.port }/api/todos { title: string, completed: boolean }
-    - Remove an item - DELETE http://localhost:${ argv.port }/api/todos/:id
-    - Remove all     - DELETE http://localhost:${ argv.port }/api/todos
+    - Health check     -    GET http://localhost:${ argv.port }/api/health
+
+    - List items       -    GET http://localhost:${ argv.port }/api/todos
+    - Add an item      -   POST http://localhost:${ argv.port }/api/todos   { title: string, completed: boolean }
+    - Update all items -  PATCH http://localhost:${ argv.port }/api/todos   { completed: boolean }
+    - Remove all items - DELETE http://localhost:${ argv.port }/api/todos
+
+    - Update an item   -    PUT http://localhost:${ argv.port }/api/todos/:id { title: string, completed: boolean }
+    - Remove an item   - DELETE http://localhost:${ argv.port }/api/todos/:id
             `);
         });
     }),

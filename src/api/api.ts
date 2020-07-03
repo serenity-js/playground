@@ -37,6 +37,7 @@ export function api (pathToDbJson: string) {
                 // storage: 'InMemoryStorageService',
             });
         })
+
         // get all items
         .get('/api/todos', (req: express.Request, res: express.Response) => {
             res.json(db.get('todos').value());
@@ -50,27 +51,6 @@ export function api (pathToDbJson: string) {
                 .write();
 
             res.json(serialised);
-        })
-        // update an item
-        .put('/api/todos/:id', (req: express.Request, res: express.Response) => {
-
-            const serialised = Todo.fromJSON(req.body).toJSON();
-
-            db.get('todos')
-                .find({ id: req.params.id })
-                .assign(serialised)
-                .write();
-
-            res.json(serialised);
-        })
-        // remove an item
-        .delete('/api/todos/:id', (req: express.Request, res: express.Response) => {
-
-            db.get('todos')
-                .remove({ id: req.params.id })
-                .write();
-
-            res.status(200).send();
         })
         // change status of all todos
         .patch('/api/todos', (req: express.Request, res: express.Response) => {
@@ -102,6 +82,27 @@ export function api (pathToDbJson: string) {
                 .write();
 
             res.json(db.get('todos').value());
+        })
+        // update an item
+        .put('/api/todos/:id', (req: express.Request, res: express.Response) => {
+
+            const serialised = Todo.fromJSON(req.body).toJSON();
+
+            db.get('todos')
+                .find({ id: req.params.id })
+                .assign(serialised)
+                .write();
+
+            res.json(serialised);
+        })
+        // remove an item
+        .delete('/api/todos/:id', (req: express.Request, res: express.Response) => {
+
+            db.get('todos')
+                .remove({ id: req.params.id })
+                .write();
+
+            res.status(200).send();
         })
     ;
 }
