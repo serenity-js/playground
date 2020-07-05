@@ -1,9 +1,8 @@
 import { Ensure, equals } from '@serenity-js/assertions';
-import { Note, Task } from '@serenity-js/core';
+import { Task } from '@serenity-js/core';
 import { Navigate, Website } from '@serenity-js/protractor';
 import { RecordItem } from './RecordItem';
-import { ChangeApiUrl, DeleteRequest, GetRequest, LastResponse, Send } from '@serenity-js/rest';
-import { LocalServer } from '@serenity-js/local-server';
+import { DeleteRequest, GetRequest, LastResponse, Send } from '@serenity-js/rest';
 
 export class Start {
     static withAnEmptyList = () =>

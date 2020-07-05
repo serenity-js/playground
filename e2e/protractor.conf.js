@@ -1,14 +1,12 @@
 const
-    { ArtifactArchiver, StreamReporter } = require('@serenity-js/core'),
+    { ArtifactArchiver } = require('@serenity-js/core'),
     { ConsoleReporter } = require('@serenity-js/console-reporter'),
     { Photographer, TakePhotosOfFailures, TakePhotosOfInteractions } = require('@serenity-js/protractor'),
     { SerenityBDDReporter } = require('@serenity-js/serenity-bdd'),
     isCI = require('is-ci');
 
-const fs = require('fs');
-
 /**
- * @type { import("protractor").Config }
+ * @type { import('protractor').Config }
  */
 exports.config = {
     baseUrl: 'http://localhost:4200/',
@@ -38,10 +36,10 @@ exports.config = {
         ]
     },
 
-    onPrepare() {
-        require('ts-node').register({
-            project: require('path').join(__dirname, './tsconfig.json')
-        });
+    mochaOpts: {
+        require: [
+            'ts-node/register',
+        ]
     },
 
     capabilities: {

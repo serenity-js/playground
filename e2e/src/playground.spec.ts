@@ -6,7 +6,7 @@ import {
     not,
     property,
 } from '@serenity-js/assertions';
-import { actorCalled, actorInTheSpotlight, engage, Log, Note, TakeNote } from '@serenity-js/core';
+import { actorCalled, engage, Log } from '@serenity-js/core';
 import { LocalServer, StartLocalServer, StopLocalServer } from '@serenity-js/local-server';
 import { Browser } from '@serenity-js/protractor';
 import { logging, protractor } from 'protractor';
@@ -31,18 +31,17 @@ describe('Playground Todo App', function() {
 
     describe('actor', () => {
 
-        before(() =>
+        beforeEach(() =>
             actorCalled('Adam').attemptsTo(
-                StartLocalServer.onOneOfThePreferredPorts([3000]),
+                StartLocalServer.onPort(3000),
                 Log.the(LocalServer.url()),
                 Ensure.that(LocalServer.url(), equals('http://127.0.0.1:3000')),
 
                 Send.a(GetRequest.to('/api/health')),
                 Ensure.that(LastResponse.status(), equals(200)),
-                TakeNote.of(LocalServer.url()),
             ));
 
-        after(() =>
+        afterEach(() =>
             actorCalled('Adam').attemptsTo(
                 StopLocalServer.ifRunning(),
             ));

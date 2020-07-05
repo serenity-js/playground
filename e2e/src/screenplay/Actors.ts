@@ -1,4 +1,4 @@
-import { Actor, Cast, TakeNotes } from '@serenity-js/core';
+import { Actor, Cast } from '@serenity-js/core';
 import { ManageALocalServer } from '@serenity-js/local-server';
 import { BrowseTheWeb } from '@serenity-js/protractor';
 
@@ -16,8 +16,6 @@ export class Actors implements Cast {
         switch (actor.name) {
             case 'Adam':
                 return actor.whoCan(
-                    TakeNotes.usingASharedNotepad(),
-                    BrowseTheWeb.using(protractor.browser),                 // todo: fixme, remove
                     ManageALocalServer.runningAHttpListener(server(
                         path.join(__dirname, '../../../target/todos.json')
                     )),
@@ -26,7 +24,6 @@ export class Actors implements Cast {
             case 'Jasmine':
             default:
                 return actor.whoCan(
-                    TakeNotes.usingASharedNotepad(),
                     CallAnApi.at(this.baseUrl),
                     BrowseTheWeb.using(protractor.browser),
                 );
