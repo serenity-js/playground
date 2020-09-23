@@ -91,7 +91,6 @@ export class TodoComponent implements OnInit, DoCheck, OnDestroy {
     }
 
     edit(todo: Todo) {
-        console.log('EDIT', todo);
         this.currentTodo = todo;
         this.snapshot = todo.clone();
     }
