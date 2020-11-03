@@ -1,0 +1,36 @@
+name: build
+
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 10.x, 12.x, 14.x ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run e2e
+        env:
+          CI: true
+
+  release:
+    needs: build
+    if: github.ref == 'ref/head/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: npm ci
+      - run: npm run build
+      - run: npx semantic-release
