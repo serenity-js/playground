@@ -3,7 +3,7 @@ name: build
 on: [ push ]
 
 jobs:
-  build:
+  e2e:
     runs-on: ubuntu-latest
 
     strategy:
@@ -21,9 +21,8 @@ jobs:
         env:
           CI: true
 
-  release:
-    needs: build
-    if: github.ref == 'ref/heads/master'
+  build:
+    needs: e2e
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,4 +32,8 @@ jobs:
           node-version: 14.x
       - run: npm ci
       - run: npm run build
-      - run: npx semantic-release
+      - name: release
+        if: github.ref == 'refs/heads/master'
+        run: npx semantic-release
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
