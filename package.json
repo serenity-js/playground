@@ -107,7 +107,7 @@
         "protractor": "^7.0.0",
         "rimraf": "^3.0.2",
         "rxjs": "^6.6.2",
-        "semantic-release": "^17.1.1",
+        "semantic-release": "^19.0.5",
         "tiny-types": "^1.14.1",
         "todomvc-app-css": "^2.3.0",
         "todomvc-common": "^1.0.5",
