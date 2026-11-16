@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Smart Behave: Run / Debug Current Feature",
+      "type": "python",
+      "request": "launch",
+      "module": "behave",
+      "args": [
+        "${input:smartBehaveArgs}",
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Smart Behave: Run / Debug All Features",
+      "type": "python",
+      "request": "launch",
+      "module": "behave",
+      "args": [
+        "${input:smartBehaveArgs}",
+        "features"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "smartBehaveArgs",
+      "type": "promptString",
+      "description": "Enter custom Behave arguments",
+      "default": "-D property_file=configs/config.properties -D endpoint_file=endpoints.json -D caps_file=ios_caps_v5.json -D log_level=DEBUG"
+    }
+  ]
+}
